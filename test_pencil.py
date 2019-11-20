@@ -29,5 +29,13 @@ class TestPencil(unittest.TestCase):
         p.erase("la")
         self.assertTrue(p.getText() == "last on   st night's schedule was immigration   w")
 
+    def test_erasersWearOut(self):
+        p = Pencil(length = 40, pointDurability = 1000, eraserDurability = 2)
+        p.write("last on last night's schedule was immigration law")
+        p.erase("la")
+        self.assertTrue(p.getText() == "last on last night's schedule was immigration   w")
+        p.erase("la")
+        self.assertTrue(p.getText() == "last on last night's schedule was immigration   w")
+
 if __name__ == '__main__':
     unittest.main()

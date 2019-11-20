@@ -2,6 +2,7 @@ class Pencil:
     def __init__(self, length, pointDurability, eraserDurability):
         self.length = length
         self.initPointDurability = self.pointDurability = pointDurability
+        self.eraserDurability = eraserDurability
         self.text = ''
 
     def write(self, text):
@@ -18,8 +19,10 @@ class Pencil:
     def erase(self, text):
         tPos = self.text.rfind(text)
         if tPos != -1:
-            tLen = len(text)
-            self.text = f'{self.text[0:tPos]}{" ":{tLen}}{self.text[tPos + tLen:]}'
+            tLen = min(len(text), self.eraserDurability)
+            if tLen > 0:
+                self.text = f'{self.text[0:tPos]}{" ":{tLen}}{self.text[tPos + tLen:]}'
+                self.eraserDurability -= tLen
 
     def getText(self):
         return self.text
