@@ -13,6 +13,21 @@ class TestPencil(unittest.TestCase):
         p = Pencil(length = 40, pointDurability = 4, eraserDurability = 200)
         p.write("ambidextrous")
         self.assertTrue(p.getText() == "ambi        ")
+        
+    def test_aSharpenedPencilCanWriteAgain(self):
+       p = Pencil(length = 40, pointDurability = 4, eraserDurability = 200)
+       p.write("ambi")
+       p.sharpen()
+       p.write("dextrous")
+       self.assertTrue(p.getText() == "ambidext    ")
+       
+    def test_erasingTextReplacesItsLastOccurrenceWithSpaces(self):
+        p = Pencil(length = 40, pointDurability = 1000, eraserDurability = 200)
+        p.write("last on last night's schedule was immigration law")
+        p.erase("la")
+        self.assertTrue(p.getText() == "last on last night's schedule was immigration   w")
+        p.erase("la")
+        self.assertTrue(p.getText() == "last on   st night's schedule was immigration   w")
 
 if __name__ == '__main__':
     unittest.main()
