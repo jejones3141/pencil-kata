@@ -9,5 +9,10 @@ class TestPencil(unittest.TestCase):
         p.write(text)
         self.assertTrue(p.getText() == text)
 
+    def test_aPencilWritesBlanksAfterPointLosesDurability(self):
+        p = Pencil(length = 40, pointDurability = 4, eraserDurability = 200)
+        p.write("ambidextrous")
+        self.assertTrue(p.getText() == "ambi        ")
+
 if __name__ == '__main__':
     unittest.main()
