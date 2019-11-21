@@ -37,11 +37,20 @@ class TestPencil(unittest.TestCase):
         p.erase("la")
         self.assertTrue(p.getText() == "last on last night's schedule was immigration   w")
         
-    def test_textIsErasedBackwards(self):
+    def test_textIsErasedFromTheRight(self):
         p = Pencil(length = 40, pointDurability = 1000, eraserDurability = 5)
         p.write("a Kafkaesque bureaucracy")
         p.erase("Kafkaesque")
         self.assertTrue(p.getText() == "a Kafka      bureaucracy")
+        
+    def test_whitespaceDoesntDepleteErasers(self):
+        p = Pencil(length = 40, pointDurability = 1000, eraserDurability = 5)
+        p.write("last on last night's schedule was immigration law")
+        p.erase(" was ")
+        self.assertTrue(p.getText() == "last on last night's schedule     immigration law")
+        p.erase("la")
+        self.assertTrue(p.getText() == "last on last night's schedule     immigration   w")
+
 
 if __name__ == '__main__':
     unittest.main()
