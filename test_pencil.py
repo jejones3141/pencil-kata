@@ -36,6 +36,12 @@ class TestPencil(unittest.TestCase):
         self.assertTrue(p.getText() == "last on last night's schedule was immigration   w")
         p.erase("la")
         self.assertTrue(p.getText() == "last on last night's schedule was immigration   w")
+        
+    def test_textIsErasedBackwards(self):
+        p = Pencil(length = 40, pointDurability = 1000, eraserDurability = 5)
+        p.write("a Kafkaesque bureaucracy")
+        p.erase("Kafkaesque")
+        self.assertTrue(p.getText() == "a Kafka      bureaucracy")
 
 if __name__ == '__main__':
     unittest.main()

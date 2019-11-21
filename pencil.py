@@ -7,22 +7,31 @@ class Pencil:
 
     def write(self, text):
         for c in text:
-            w = 0 if c.isspace() else 2 if c.isupper() else 1
-            self.text += ' ' if self.pointDurability < w else c
-            self.pointDurability = max(self.pointDurability - w, 0)
+            wear = 0 if c.isspace() else 2 if c.isupper() else 1
+            self.text += ' ' if self.pointDurability < wear else c
+            self.pointDurability = max(self.pointDurability - wear, 0)
             
     def sharpen(self):
         if self.length > 0:
             self.pointDurability = self.initPointDurability
             self.length -= 1
             
+    def _eraseWear(c):
+        return 
+            
     def erase(self, text):
         tPos = self.text.rfind(text)
-        if tPos != -1:
-            tLen = min(len(text), self.eraserDurability)
-            if tLen > 0:
-                self.text = f'{self.text[0:tPos]}{" ":{tLen}}{self.text[tPos + tLen:]}'
-                self.eraserDurability -= tLen
+        if tPos == -1:
+            return
+        numErased = 0
+        for c in reversed(text):
+            if self.eraserDurability <= 0:
+                break
+            numErased += 1
+            self.eraserDurability -= 0 if c.isspace() else 1
+        suffixPos = tPos + len(text)
+        self.text = (self.text[:suffixPos - numErased] + (numErased * ' ') +
+                     self.text[suffixPos:])
 
     def getText(self):
         return self.text
