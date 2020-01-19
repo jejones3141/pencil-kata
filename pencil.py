@@ -4,6 +4,7 @@ class Pencil:
         self.initPointDurability = self.pointDurability = pointDurability
         self.eraserDurability = eraserDurability
         self.text = ''
+        self.erasedPos = None
 
     def write(self, text):
         for c in text:
@@ -30,8 +31,20 @@ class Pencil:
             numErased += 1
             self.eraserDurability -= 0 if c.isspace() else 1
         suffixPos = tPos + len(text)
-        self.text = (self.text[:suffixPos - numErased] + (numErased * ' ') +
+        self.erasedPos = suffixPos - numErased
+        self.text = (self.text[:self.erasedPos] + (numErased * ' ') +
                      self.text[suffixPos:])
+
+    def overwrite(self, text):
+        if self.erasedPos is not None:
+            replacement = ''
+            for c in text:
+                wear = 0 if c.isspace() else 2 if c.isupper() else 1
+                replacement += ' ' if self.pointDurability < wear else c
+                self.pointDurability = max(self.pointDurability - wear, 0)
+            suffixPos = self.erasedPos + len(text)
+            self.text = self.text[:self.erasedPos] + replacement + self.text[suffixPos:]
+            self.erasedPos = None
 
     def getText(self):
         return self.text

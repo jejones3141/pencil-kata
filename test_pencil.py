@@ -50,6 +50,13 @@ class TestPencil(unittest.TestCase):
         self.assertTrue(p.getText() == "last on last night's schedule     immigration law")
         p.erase("la")
         self.assertTrue(p.getText() == "last on last night's schedule     immigration   w")
+        
+    def test_editingOverwritesErasedText(self):
+        p = Pencil(length = 40, pointDurability = 1000, eraserDurability = 200)
+        p.write("An apple a day keeps the doctor away")
+        p.erase("apple")
+        p.overwrite("onion")
+        self.assertTrue(p.getText() == "An onion a day keeps the doctor away")
 
 
 if __name__ == '__main__':
