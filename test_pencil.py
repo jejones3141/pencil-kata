@@ -57,6 +57,13 @@ class TestPencil(unittest.TestCase):
         p.erase("apple")
         p.overwrite("onion")
         self.assertTrue(p.getText() == "An onion a day keeps the doctor away")
+    
+    def test_editingMarksCollisionsWithNonSpaceWithAt(self):
+        p = Pencil(length = 40, pointDurability = 1000, eraserDurability = 200)
+        p.write("An apple a day keeps the doctor away")
+        p.erase("apple")
+        p.overwrite("artichoke")
+        self.assertTrue(p.getText() == "An artich@k@ay keeps the doctor away")
 
 
 if __name__ == '__main__':

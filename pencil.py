@@ -38,10 +38,13 @@ class Pencil:
     def overwrite(self, text):
         if self.erasedPos is not None:
             replacement = ''
+            selfTextPos = self.erasedPos
             for c in text:
                 wear = 0 if c.isspace() else 2 if c.isupper() else 1
-                replacement += ' ' if self.pointDurability < wear else c
+                replacement += (     '@' if self.text[selfTextPos] != ' '
+                                else ' ' if self.pointDurability < wear else c)
                 self.pointDurability = max(self.pointDurability - wear, 0)
+                selfTextPos += 1
             suffixPos = self.erasedPos + len(text)
             self.text = self.text[:self.erasedPos] + replacement + self.text[suffixPos:]
             self.erasedPos = None
