@@ -1,0 +1,19 @@
+There are still a few open questions:
+
+1. Consider this test:
+
+    def test_writingALowerCaseCharacterAfterFailingToWriteAnUpperCaseCharacter(self):
+        p = Pencil(length = 40, pointDurability = 1, eraserDurability = 200)
+        p.write("By")
+        expectedText = # should this be "  " or " y"?
+        self.assertTrue(p.getText() == expectedText)
+        
+   As the code is written now, the result of p.getText() will be "  ".
+
+2. Does the '@' for attempts to overwrite non-whitespace characters count as writing,
+   i.e. can/should it take place even if the point durability is zero? As the code is
+   written now, it does count.
+   
+3. Should it be possible to erase more than one string and then select one of them
+   to overwrite? As the code stands now, it remembers the last-erased text and
+   forgets it after it's overwritten.
